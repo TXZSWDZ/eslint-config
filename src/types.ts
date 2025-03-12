@@ -21,6 +21,14 @@ export interface OptionsFiles {
     files?: string[]
 }
 
+export interface OptionsTypeScriptWithTypes {
+    tsconfigPath?: string
+}
+
+
+export type OptionsTypescript = OptionsTypeScriptWithTypes & OptionsOverrides
+
+
 export interface OptionsComponentExts {
     /**
      * 组件的附加扩展
@@ -39,7 +47,7 @@ export interface OptionsConfig extends OptionsComponentExts {
      * 
      * @default 基于依赖项的自动检测
      */
-    typescript?: boolean | OptionsOverrides
+    typescript?: boolean | OptionsTypescript
 
     /**
      * 是否启用vue
