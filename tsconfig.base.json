@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "forceConsistentCasingInFileNames": true,
+      "incremental": true,
+      "isolatedModules": true,
+      "strictPropertyInitialization": false,
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "strict": true,
+      "target": "ESNext"
+    }
+  }
+  
