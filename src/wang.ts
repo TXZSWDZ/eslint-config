@@ -1,6 +1,7 @@
+import type { Config, Configs,OptionsConfig, OptionsOverrides } from './types';
+
 import { base, ignores, javascript, typescript } from './config/index'
 import { defineConfig } from "eslint/config";
-import { Config, Configs,OptionsConfig, OptionsOverrides } from './types';
 import { isPackageExists } from "local-pkg"
 
 const VuePackages = [
@@ -21,13 +22,13 @@ export function getOverrides<k extends keyof OptionsConfig>(
 ): Config['rules'] {
     const typescriptOptions = resolveOptions(options, key)
     return {
-        ...(options.overrides as any)?.[key],
+        ...(options.overrides as Config['rules'])?.[key],
         ...'overrides' in typescriptOptions
             ? typescriptOptions.overrides
             : {},
     }
 }
-export function w(options?: OptionsConfig, ...userConfigs: Configs): Configs {
+export async  function w(options?: OptionsConfig, ...userConfigs: Configs): Promise<Configs> {
     options = options || {}
     const {
         componentExts = [],
@@ -49,7 +50,7 @@ export function w(options?: OptionsConfig, ...userConfigs: Configs): Configs {
 
     const typescriptOptions = getOverrides(options, 'typescript')
     if (enableTypeScript) {
-        configs.push(typescript({ ...typescriptOptions, overrides: getOverrides(options, 'typescript'), componentExts }))
+        configs.push(await typescript({ ...typescriptOptions, overrides: getOverrides(options, 'typescript'), componentExts }))
     }
 
     return defineConfig(configs.concat(userConfigs))
