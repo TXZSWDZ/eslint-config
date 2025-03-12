@@ -1,4 +1,4 @@
-import { Config, OptionsOverrides } from 'src/types'
+import type { Config, OptionsOverrides } from 'src/types'
 export function javascript(options: OptionsOverrides): Config {
     const { overrides = {} } = options
     return {
