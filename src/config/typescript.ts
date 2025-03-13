@@ -9,7 +9,7 @@ import type {
 } from "../types";
 
 import { GLOB_TS, GLOB_TSX } from "../global";
-import { interopDefault } from "../utils";
+import { renameRules, interopDefault } from "../utils";
 
 export async function typescript(
     options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes
@@ -60,6 +60,7 @@ export async function typescript(
         "ts/switch-exhaustiveness-check": "error",
         "ts/unbound-method": "error",
     };
+    
 
     return {
         files,
@@ -82,6 +83,14 @@ export async function typescript(
             ts: pluginTs,
         },
         rules: {
+            ...renameRules(
+                pluginTs.configs['eslint-recommended'].overrides![0].rules!,
+                { '@typescript-eslint': 'ts' },
+            ),
+            ...renameRules(
+                pluginTs.configs.strict.rules!,
+                { '@typescript-eslint': 'ts' },
+            ),
             "no-dupe-class-members": "off",
             "no-redeclare": "off",
             "no-use-before-define": "off",
