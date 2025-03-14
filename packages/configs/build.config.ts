@@ -1,7 +1,7 @@
-import { defineBuildConfig } from "unbuild";
+import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
-  entries: ["index"],
+  entries: ['index'],
   declaration: true,
   clean: true,
   rollup: {},
-});
+})

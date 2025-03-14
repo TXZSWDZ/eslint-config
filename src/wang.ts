@@ -1,58 +1,67 @@
-import type { Config, Configs,OptionsConfig, OptionsOverrides } from './types';
+import type { Config, Configs, OptionsConfig, OptionsOverrides } from './types'
 
-import { base, ignores, javascript, typescript } from './config/index'
-import { defineConfig } from "eslint/config";
-import { isPackageExists } from "local-pkg"
+import { base, ignores, javascript, typescript, stylistic } from './config/index'
+import { defineConfig } from 'eslint/config'
+import { isPackageExists } from 'local-pkg'
 
 const VuePackages = [
-    'vue'
+  'vue',
 ]
 
 export function resolveOptions<k extends keyof OptionsConfig>(
-    options: OptionsConfig,
-    key: k,
+  options: OptionsConfig,
+  key: k,
 ): OptionsOverrides {
-    if (typeof options[key] === 'boolean') return {}
-    return (options[key] as OptionsOverrides) || {}
+  if (typeof options[key] === 'boolean') return {}
+  return (options[key] as OptionsOverrides) || {}
 }
 
 export function getOverrides<k extends keyof OptionsConfig>(
-    options: OptionsConfig,
-    key: k,
+  options: OptionsConfig,
+  key: k,
 ): Config['rules'] {
-    const typescriptOptions = resolveOptions(options, key)
-    return {
-        ...(options.overrides as Config['rules'])?.[key],
-        ...'overrides' in typescriptOptions
-            ? typescriptOptions.overrides
-            : {},
-    }
+  const currentOptions = resolveOptions(options, key)
+  return {
+    ...(options.overrides as Config['rules'])?.[key],
+    ...'overrides' in currentOptions
+      ? currentOptions.overrides
+      : {},
+  }
 }
-export async  function w(options?: OptionsConfig, ...userConfigs: Configs): Promise<Configs> {
-    options = options || {}
-    const {
-        componentExts = [],
-        typescript: enableTypeScript = isPackageExists('typescript'),
-        vue: enableVue = VuePackages.some(i => isPackageExists(i))
-    } = options
+export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promise<Configs> {
+  options = options || {}
+  const {
+    componentExts = [],
+    typescript: enableTypeScript = isPackageExists('typescript'),
+    stylistic: enableStylistic = true,
+    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+  } = options
 
-    const configs: Configs = []
+  const configs: Configs = []
 
-    configs.push(
-        base(),
-        ignores(options.ignores),
-        javascript({ overrides: getOverrides(options, 'javascript') })
-    )
+  configs.push(
+    base(),
+    ignores(options.ignores),
+    javascript({ overrides: getOverrides(options, 'javascript') }),
+  )
 
-    if (enableVue) {
-        componentExts.push('vue')
-    }
+  if (enableVue) {
+    componentExts.push('vue')
+  }
 
-    const typescriptOptions = getOverrides(options, 'typescript')
-    if (enableTypeScript) {
-        configs.push(await typescript({ ...typescriptOptions, overrides: getOverrides(options, 'typescript'), componentExts }))
-    }
+  const stylisticOptions = getOverrides(options, 'stylistic')
+  if (enableStylistic) {
+    configs.push(await stylistic({ ...stylisticOptions, overrides: getOverrides(options, 'stylistic') }))
+  }
 
-    return defineConfig(configs.concat(userConfigs))
+  const typescriptOptions = getOverrides(options, 'typescript')
+  if (enableTypeScript) {
+    configs.push(await typescript({
+      ...typescriptOptions,
+      overrides: getOverrides(options, 'typescript'),
+      componentExts,
+    }))
+  }
 
+  return defineConfig(configs.concat(userConfigs))
 }

@@ -1,2 +1,2 @@
-import {w} from './wang'
+import { w } from './wang'
 export default w

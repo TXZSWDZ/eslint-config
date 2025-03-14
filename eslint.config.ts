@@ -1,2 +1,2 @@
-import w from "./src";
-export default w();
+import w from './src'
+export default w()
