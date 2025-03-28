@@ -9,7 +9,7 @@ import type {
 } from '../types'
 
 import { GLOB_TS, GLOB_TSX } from '../global'
-import { renameRules, interopDefault } from '../utils'
+import { renameRules, interopDefault } from '../utils/index'
 
 export async function typescript(
   options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes,

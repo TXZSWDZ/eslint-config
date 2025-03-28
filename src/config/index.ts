@@ -1,5 +1,6 @@
 export * from './base'
+export * from './formatters'
 export * from './ignores'
 export * from './javascript'
-export * from './typescript'
 export * from './stylistic'
+export * from './typescript'

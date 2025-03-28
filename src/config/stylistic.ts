@@ -1,5 +1,5 @@
 import type { Config, StylisticConfig, OptionsOverrides } from '../types'
-import { interopDefault } from '../utils'
+import { interopDefault } from '../utils/index'
 
 export const StylisticConfigDefaults: StylisticConfig = { indent: 2, jsx: true, quotes: 'single', semi: false }
 
