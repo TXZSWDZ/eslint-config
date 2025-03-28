@@ -1,5 +1,5 @@
-import type { Linter } from 'eslint'
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
+import type { Linter } from 'eslint'
 
 export type Awaitable<T> = T | Promise<T>
 
@@ -17,18 +17,19 @@ export interface OptionsOverrides {
 
 export interface OptionsFiles {
   /**
-     * 自定义文件范围
-     */
+   * 自定义文件范围
+   */
   files?: string[]
 }
 
 export interface OptionsComponentExts {
   /**
-     * 组件的附加扩展
-     *
-     * @example ['vue']
-     * @default []
-     */
+   * 组件的附加扩展
+   *
+   * @example ['vue']
+   * @default
+   * []
+   */
   componentExts?: string[]
 }
 
@@ -46,33 +47,59 @@ export interface OptionsStylistic {
   stylistic?: boolean | StylisticConfig
 }
 
+export interface OptionsFormatters {
+  // html
+  html?: boolean
+  // css、less、sass、scss
+  css?: boolean
+  less?: boolean
+  scss?: boolean
+
+}
+
 export interface OptionsConfig extends OptionsComponentExts {
   ignores?: string[]
+
   /**
-     * Core rules. Can't be disabled.
-     */
+   * Core rules. Can't be disabled.
+   */
   javascript?: OptionsOverrides
+
   /**
-     * Enable typescript rules
-     *
-     * @default 基于依赖项的自动检测
-     */
+   * Enable typescript rules
+   *
+   * @default
+   * Automatically detected according to package.json
+   */
   typescript?: boolean | OptionsTypescript
 
   /**
-     * Enable stylistic rules
-     *
-     * @default true
-     */
+   * Enable stylistic rules
+   *
+   * @default
+   * true
+   */
 
   stylistic?: boolean | (StylisticConfig & OptionsOverrides)
 
   /**
-     * Enable Vue support
-     *
-     * @default 基于依赖项的自动检测
-     */
-  vue?: boolean
+   * Enable format files.
+   *
+   * Requires installing:
+   * -`eslint-plugin-format`
+   *
+   * @default
+   * false
+   */
+  formatters?: boolean | OptionsFormatters
+
+  /**
+   * Enable Vue support
+   *
+   * @default
+   * Automatically detected according to package.json
+   */
+  vue?: boolean | OptionsOverrides
 
   overrides?: {
     javascript?: Config['rules']
