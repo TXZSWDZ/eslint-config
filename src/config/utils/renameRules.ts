@@ -1,5 +1,3 @@
-import type { Awaitable } from './types'
-
 export function renameRules(
   rules: Record<string, any>,
   map: Record<string, string>,
@@ -14,9 +12,4 @@ export function renameRules(
         return [key, value]
       }),
   )
-}
-
-export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
-  const resolved = await m
-  return (resolved as any).default || resolved
 }
