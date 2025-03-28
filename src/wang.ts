@@ -1,8 +1,8 @@
 import type { Config, Configs, OptionsConfig, OptionsOverrides } from './types'
 
-import { base, ignores, javascript, typescript, stylistic } from './config/index'
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
+import { base, formatters, ignores, javascript, stylistic, typescript } from './config/index'
 
 const VuePackages = [
   'vue',
@@ -12,7 +12,8 @@ export function resolveOptions<k extends keyof OptionsConfig>(
   options: OptionsConfig,
   key: k,
 ): OptionsOverrides {
-  if (typeof options[key] === 'boolean') return {}
+  if (typeof options[key] === 'boolean')
+    return {}
   return (options[key] as OptionsOverrides) || {}
 }
 
@@ -61,6 +62,10 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
       overrides: getOverrides(options, 'typescript'),
       componentExts,
     }))
+  }
+
+  if (options.formatters) {
+    configs.push(...await formatters(options.formatters, stylisticOptions))
   }
 
   return defineConfig(configs.concat(userConfigs))
