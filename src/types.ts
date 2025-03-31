@@ -94,6 +94,22 @@ export interface OptionsConfig extends OptionsComponentExts {
   formatters?: boolean | OptionsFormatters
 
   /**
+   * Enable imports rules
+   *
+   * @default
+   * true
+   */
+  imports?: boolean | OptionsOverrides
+
+  /**
+   * Enable perfectionist rules
+   *
+   * @default
+   * true
+   */
+  perfectionist?: boolean | OptionsOverrides
+
+  /**
    * Enable Vue support
    *
    * @default
@@ -104,6 +120,8 @@ export interface OptionsConfig extends OptionsComponentExts {
   overrides?: {
     javascript?: Config['rules']
     typescript?: Config['rules']
+    imports?: Config['rules']
+    perfectionist?: Config['rules']
     vue?: Config['rules']
   }
 }
