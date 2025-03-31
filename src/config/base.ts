@@ -1,5 +1,7 @@
 import type { Config } from '../types'
+
 import globals from 'globals'
+
 export function base(): Config {
   return {
     languageOptions: {

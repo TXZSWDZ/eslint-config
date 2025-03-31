@@ -1,7 +1,9 @@
 import type { Configs, OptionsFormatters, StylisticConfig } from '../types'
+
 import { StylisticConfigDefaults } from '../config/stylistic'
 import { GLOB_CSS, GLOB_HTML, GLOB_LESS, GLOB_POSTCSS, GLOB_SCSS } from '../global'
-import { interopDefault, ensurePackages } from '../utils/index'
+import { ensurePackages, interopDefault } from '../utils/index'
+
 export async function formatters(
   options: OptionsFormatters | true = {} as OptionsFormatters,
   stylistic: StylisticConfig = {},

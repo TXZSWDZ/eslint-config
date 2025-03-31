@@ -1,15 +1,15 @@
-import process from 'node:process'
-
 import type {
   Config,
+  OptionsComponentExts,
   OptionsFiles,
   OptionsOverrides,
-  OptionsComponentExts,
   OptionsTypeScriptWithTypes,
 } from '../types'
 
+import process from 'node:process'
+
 import { GLOB_TS, GLOB_TSX } from '../global'
-import { renameRules, interopDefault } from '../utils/index'
+import { interopDefault, renameRules } from '../utils/index'
 
 export async function typescript(
   options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes,

@@ -1,6 +1,8 @@
 import type { Config, OptionsOverrides } from '../types'
+
 export function javascript(options: OptionsOverrides): Config {
   const { overrides = {} } = options
+
   return {
     rules: {
       'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
