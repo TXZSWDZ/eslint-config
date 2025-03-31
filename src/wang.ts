@@ -2,11 +2,18 @@ import type { Config, Configs, OptionsConfig, OptionsOverrides } from './types'
 
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
-import { base, formatters, ignores, javascript, stylistic, typescript } from './config/index'
+
+import { base, formatters, ignores, imports, javascript, perfectionist, stylistic, typescript } from './config/index'
 
 const VuePackages = [
   'vue',
 ]
+
+export function resolveSubOptions<K extends keyof OptionsConfig>(options: OptionsConfig, key: K) {
+  return typeof options[key] === 'boolean'
+    ? {} as any
+    : options[key] || {} as any
+}
 
 export function resolveOptions<k extends keyof OptionsConfig>(
   options: OptionsConfig,
@@ -35,6 +42,8 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     componentExts = [],
     typescript: enableTypeScript = isPackageExists('typescript'),
     stylistic: enableStylistic = true,
+    imports: enableImports = true,
+    perfectionist: enablePerfectionist = true,
     vue: enableVue = VuePackages.some(i => isPackageExists(i)),
   } = options
 
@@ -50,12 +59,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     componentExts.push('vue')
   }
 
-  const stylisticOptions = getOverrides(options, 'stylistic')
-  if (enableStylistic) {
-    configs.push(await stylistic({ ...stylisticOptions, overrides: getOverrides(options, 'stylistic') }))
-  }
-
-  const typescriptOptions = getOverrides(options, 'typescript')
+  const typescriptOptions = resolveSubOptions(options, 'typescript')
   if (enableTypeScript) {
     configs.push(await typescript({
       ...typescriptOptions,
@@ -64,8 +68,24 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     }))
   }
 
+  const stylisticOptions = resolveSubOptions(options, 'stylistic')
+  if (enableStylistic) {
+    configs.push(await stylistic({
+      ...stylisticOptions,
+      overrides: getOverrides(options, 'stylistic'),
+    }))
+  }
+
   if (options.formatters) {
-    configs.push(...await formatters(options.formatters, stylisticOptions))
+    configs.push(...await formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions))
+  }
+
+  if (enableImports) {
+    configs.push(await imports({ overrides: getOverrides(options, 'imports') }))
+  }
+
+  if (enablePerfectionist) {
+    configs.push(await perfectionist({ overrides: getOverrides(options, 'perfectionist') }))
   }
 
   return defineConfig(configs.concat(userConfigs))
