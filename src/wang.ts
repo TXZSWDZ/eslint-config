@@ -3,7 +3,7 @@ import type { Awaitable, Config, Configs, OptionsConfig, OptionsOverrides } from
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
 
-import { base, formatters, ignores, imports, javascript, perfectionist, stylistic, typescript, vue } from './config/index'
+import { base, formatters, ignores, imports, javascript, node, perfectionist, stylistic, typescript, vue } from './config/index'
 import { concat } from './utils/index'
 
 const VuePackages = [
@@ -54,6 +54,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     base(),
     ignores(options.ignores),
     javascript({ overrides: getOverrides(options, 'javascript') }),
+    await node(),
   )
 
   if (enableVue) {
