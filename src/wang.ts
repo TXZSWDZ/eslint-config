@@ -1,9 +1,10 @@
-import type { Config, Configs, OptionsConfig, OptionsOverrides } from './types'
+import type { Awaitable, Config, Configs, OptionsConfig, OptionsOverrides } from './types'
 
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
 
-import { base, formatters, ignores, imports, javascript, perfectionist, stylistic, typescript } from './config/index'
+import { base, formatters, ignores, imports, javascript, perfectionist, stylistic, typescript, vue } from './config/index'
+import { concat } from './utils/index'
 
 const VuePackages = [
   'vue',
@@ -47,7 +48,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     vue: enableVue = VuePackages.some(i => isPackageExists(i)),
   } = options
 
-  const configs: Configs = []
+  const configs: Awaitable<Config | Configs>[] = []
 
   configs.push(
     base(),
@@ -77,7 +78,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
   }
 
   if (options.formatters) {
-    configs.push(...await formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions))
+    configs.push(await formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions))
   }
 
   if (enableImports) {
@@ -88,5 +89,16 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     configs.push(await perfectionist({ overrides: getOverrides(options, 'perfectionist') }))
   }
 
-  return defineConfig(configs.concat(userConfigs))
+  if (enableVue) {
+    configs.push(await vue(
+      {
+        ...resolveSubOptions(options, 'vue'),
+        stylistic: stylisticOptions,
+        overrides: getOverrides(options, 'vue'),
+        typescript: !!enableTypeScript,
+      },
+    ))
+  }
+
+  return defineConfig(await concat(...configs, ...userConfigs))
 }
