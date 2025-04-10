@@ -57,6 +57,23 @@ export interface OptionsFormatters {
 
 }
 
+export interface OptionsVue extends OptionsOverrides {
+  /**
+   * Vue version. Apply different rules set from `eslint-plugin-vue`.
+   *
+   * @default
+   * 3
+   */
+  vueVersion?: 2 | 3
+  /**
+   * Help check a11y issue. Apply rules set from `eslint-plugin-vuejs-accessibility`.
+   *
+   * @default
+   * false
+   */
+  a11y?: boolean
+}
+
 export interface OptionsConfig extends OptionsComponentExts {
   ignores?: string[]
 
@@ -85,8 +102,7 @@ export interface OptionsConfig extends OptionsComponentExts {
   /**
    * Enable format files.
    *
-   * Requires installing:
-   * -`eslint-plugin-format`
+   * Requires installing: `eslint-plugin-format`
    *
    * @default
    * false
@@ -115,7 +131,7 @@ export interface OptionsConfig extends OptionsComponentExts {
    * @default
    * Automatically detected according to package.json
    */
-  vue?: boolean | OptionsOverrides
+  vue?: boolean | OptionsVue
 
   overrides?: {
     javascript?: Config['rules']
