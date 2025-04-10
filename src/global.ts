@@ -11,6 +11,7 @@ export const GLOB_LESS = '**/*.less'
 export const GLOB_SCSS = '**/*.scss'
 
 export const GLOB_HTML = '**/*.htm?(l)'
+export const GLOB_VUE = '**/*.vue'
 
 export const GLOB_EXCLUDE = [
   '**/node_modules',
