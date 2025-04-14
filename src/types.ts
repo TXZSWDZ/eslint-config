@@ -89,6 +89,13 @@ export interface OptionsConfig extends OptionsComponentExts {
    * Automatically detected according to package.json
    */
   typescript?: boolean | OptionsTypescript
+  /**
+   * Enable j\tsx files
+   *
+   * @default
+   * false
+   */
+  jsx?: boolean
 
   /**
    * Enable stylistic rules

@@ -3,7 +3,7 @@ import type { Awaitable, Config, Configs, OptionsConfig, OptionsOverrides } from
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
 
-import { base, formatters, ignores, imports, javascript, node, perfectionist, stylistic, typescript, vue } from './config/index'
+import { base, formatters, ignores, imports, javascript, jsx, node, perfectionist, stylistic, typescript, vue } from './config/index'
 import { concat } from './utils/index'
 
 const VuePackages = [
@@ -42,6 +42,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
   const {
     componentExts = [],
     typescript: enableTypeScript = isPackageExists('typescript'),
+    jsx: enableJsx = false,
     stylistic: enableStylistic = true,
     imports: enableImports = true,
     perfectionist: enablePerfectionist = true,
@@ -56,6 +57,10 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     javascript({ overrides: getOverrides(options, 'javascript') }),
     await node(),
   )
+
+  if (enableJsx) {
+    configs.push(jsx())
+  }
 
   if (enableVue) {
     componentExts.push('vue')

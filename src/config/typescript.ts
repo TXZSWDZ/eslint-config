@@ -8,7 +8,7 @@ import type {
 
 import process from 'node:process'
 
-import { GLOB_TS, GLOB_TSX } from '../global'
+import { GLOB_TS } from '../global'
 import { interopDefault, renameRules } from '../utils/index'
 
 export async function typescript(
@@ -18,7 +18,6 @@ export async function typescript(
 
   const files = options.files ?? [
     GLOB_TS,
-    GLOB_TSX,
     ...componentExts.map((ext: string) => `**/*.${ext}`),
   ]
 
