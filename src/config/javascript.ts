@@ -1,11 +1,20 @@
 import type { Config, OptionsOverrides } from '../types'
 
+import { pluginAntfu, pluginUnusedImports } from '../plugins'
+
 export function javascript(options: OptionsOverrides): Config {
   const { overrides = {} } = options
 
   return {
+    plugins: {
+      'antfu': pluginAntfu,
+      'unused-imports': pluginUnusedImports,
+    },
     rules: {
       'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
+
+      'antfu/no-top-level-await': 'error',
+
       'array-callback-return': 'error',
       'block-scoped-var': 'error',
       'constructor-super': 'error',
@@ -106,12 +115,16 @@ export function javascript(options: OptionsOverrides): Config {
         allowTaggedTemplates: true,
         allowTernary: true,
       }],
-      'no-unused-vars': ['error', {
-        args: 'none',
-        caughtErrors: 'none',
-        ignoreRestSiblings: true,
-        vars: 'all',
-      }],
+      'no-unused-vars': [
+        'error',
+        {
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+          vars: 'all',
+          varsIgnorePattern: '^_',
+        },
+      ],
       'no-use-before-define': ['error', {
         classes: false,
         functions: false,
@@ -154,6 +167,19 @@ export function javascript(options: OptionsOverrides): Config {
       'prefer-template': 'error',
       'symbol-description': 'error',
       'unicode-bom': ['error', 'never'],
+
+      'unused-imports/no-unused-imports': 'error',
+      // 'unused-imports/no-unused-vars': [
+      //   'error',
+      //   {
+      //     args: 'after-used',
+      //     argsIgnorePattern: '^_',
+      //     ignoreRestSiblings: true,
+      //     vars: 'all',
+      //     varsIgnorePattern: '^_',
+      //   },
+      // ],
+
       'use-isnan': ['error', { enforceForIndexOf: true, enforceForSwitchCase: true }],
       'valid-typeof': ['error', { requireStringLiterals: true }],
       'vars-on-top': 'error',
