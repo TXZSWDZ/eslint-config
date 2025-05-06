@@ -140,11 +140,14 @@ export interface OptionsConfig extends OptionsComponentExts {
    */
   vue?: boolean | OptionsVue
 
+  react?: boolean
+
   overrides?: {
     javascript?: Config['rules']
     typescript?: Config['rules']
     imports?: Config['rules']
     perfectionist?: Config['rules']
     vue?: Config['rules']
+    react?: Config['rules']
   }
 }
