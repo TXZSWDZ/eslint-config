@@ -1,7 +1,7 @@
 import type { Config, OptionsOverrides } from '../types'
 
 import { pluginAntfu } from '../plugins'
-import { interopDefault } from '../utils'
+import { interopDefault } from '../utils/index'
 
 export async function imports(options: OptionsOverrides): Promise<Config> {
   const { overrides = {} } = options

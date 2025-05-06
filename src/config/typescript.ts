@@ -71,7 +71,8 @@ export async function typescript(
                 defaultProject: tsconfigPath,
               },
               tsconfigRootDir: process.cwd(),
-
+              // projectService: true,
+              // tsconfigRootDir: import.meta.dirname,
             }
           : {},
       },
