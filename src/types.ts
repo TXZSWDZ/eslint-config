@@ -74,6 +74,21 @@ export interface OptionsVue extends OptionsOverrides {
   a11y?: boolean
 }
 
+export interface OptionsUnocss extends OptionsOverrides {
+  /**
+   * @default
+   * true
+   */
+  attributify?: boolean
+
+  /**
+   * @default
+   * false
+   */
+  strict?: boolean
+
+}
+
 export interface OptionsConfig extends OptionsComponentExts {
   ignores?: string[]
 
@@ -142,6 +157,8 @@ export interface OptionsConfig extends OptionsComponentExts {
 
   react?: boolean
 
+  unocss?: boolean | OptionsUnocss
+
   overrides?: {
     javascript?: Config['rules']
     typescript?: Config['rules']
@@ -149,5 +166,6 @@ export interface OptionsConfig extends OptionsComponentExts {
     perfectionist?: Config['rules']
     vue?: Config['rules']
     react?: Config['rules']
+    unocss?: Config['rules']
   }
 }
