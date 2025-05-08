@@ -3,7 +3,7 @@ import type { Awaitable, Config, Configs, OptionsConfig, OptionsOverrides } from
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
 
-import { base, formatters, ignores, imports, javascript, jsx, node, perfectionist, react, stylistic, typescript, unocss, vue } from './config/index'
+import { base, formatters, ignores, imports, javascript, jsonc, jsx, node, perfectionist, react, stylistic, typescript, unocss, vue } from './config/index'
 import { concat } from './utils/index'
 
 const VuePackages = [
@@ -53,11 +53,19 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
 
   const configs: Awaitable<Config | Configs>[] = []
 
+  const typescriptOptions = resolveSubOptions(options, 'typescript')
+  const stylisticOptions = resolveSubOptions(options, 'stylistic')
+  const vueOptions = resolveSubOptions(options, 'vue')
+
   configs.push(
     base(),
     ignores(options.ignores),
     javascript({ overrides: getOverrides(options, 'javascript') }),
     await node(),
+    await jsonc({
+      stylistic: stylisticOptions,
+      overrides: getOverrides(options, 'jsonc'),
+    }),
   )
 
   if (enableJsx) {
@@ -68,7 +76,6 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     componentExts.push('vue')
   }
 
-  const typescriptOptions = resolveSubOptions(options, 'typescript')
   if (enableTypeScript) {
     configs.push(await typescript({
       ...typescriptOptions,
@@ -77,7 +84,6 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     }))
   }
 
-  const stylisticOptions = resolveSubOptions(options, 'stylistic')
   if (enableStylistic) {
     configs.push(await stylistic({
       ...stylisticOptions,
@@ -100,7 +106,7 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
   if (enableVue) {
     configs.push(await vue(
       {
-        ...resolveSubOptions(options, 'vue'),
+        ...vueOptions,
         stylistic: stylisticOptions,
         overrides: getOverrides(options, 'vue'),
         typescript: !!enableTypeScript,

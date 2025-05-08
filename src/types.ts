@@ -148,6 +148,14 @@ export interface OptionsConfig extends OptionsComponentExts {
   perfectionist?: boolean | OptionsOverrides
 
   /**
+   * Enable jsonc rules
+   *
+   * @default
+   * true
+   */
+  jsonc?: boolean | OptionsOverrides
+
+  /**
    * Enable Vue support
    *
    * @default
@@ -164,6 +172,7 @@ export interface OptionsConfig extends OptionsComponentExts {
     typescript?: Config['rules']
     imports?: Config['rules']
     perfectionist?: Config['rules']
+    jsonc?: Config['rules']
     vue?: Config['rules']
     react?: Config['rules']
     unocss?: Config['rules']

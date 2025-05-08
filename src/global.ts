@@ -10,6 +10,10 @@ export const GLOB_CSS = '**/*.css'
 export const GLOB_LESS = '**/*.less'
 export const GLOB_SCSS = '**/*.scss'
 
+export const GLOB_JSON = '**/*.json'
+export const GLOB_JSON5 = '**/*.json5'
+export const GLOB_JSONC = '**/*.jsonc'
+
 export const GLOB_HTML = '**/*.htm?(l)'
 export const GLOB_VUE = '**/*.vue'
 
