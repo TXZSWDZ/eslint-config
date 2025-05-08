@@ -15,7 +15,6 @@ export async function unocss(options: OptionsUnocss = {}): Promise<Config> {
   const pluginUnoCSS = await interopDefault(import('@unocss/eslint-plugin'))
 
   return {
-    files: ['**/*.vue', '**/*.html'],
     plugins: {
       unocss: pluginUnoCSS,
     },
