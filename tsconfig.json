@@ -1,11 +1,10 @@
 {
-  "extends":"./tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Bundler"
+
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"]
 }
