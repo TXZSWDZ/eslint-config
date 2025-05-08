@@ -72,6 +72,7 @@ export async function vue(options: OptionsVue & OptionsStylistic & { typescript:
           sourceType: 'module',
         },
       },
+      processor: pluginVue.processors['.vue'],
       rules: {
         ...pluginVue.configs.base.rules,
         ...vueVersion === 2
