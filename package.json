@@ -1,5 +1,5 @@
 {
-  "name": "@w/eslint-config",
+  "name": "@wthe/eslint-config",
   "type": "module",
   "version": "1.0.1",
   "description": "wang eslint config",
