@@ -1,7 +1,7 @@
 {
   "name": "@w/eslint-config",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "wang eslint config",
   "author": "wang",
   "license": "ISC",
