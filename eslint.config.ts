@@ -1,3 +1,8 @@
 import w from './src'
 
-export default w()
+export default w(
+  {
+    jsonc: true,
+    yaml: true,
+  },
+)
