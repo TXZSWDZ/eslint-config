@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
+    "target": "ESNext",
     "experimentalDecorators": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext"
+    "skipLibCheck": true
   }
 }
