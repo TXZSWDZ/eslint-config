@@ -55,6 +55,7 @@ export async function jsonc(options: OptionsOverrides & OptionsStylistic): Promi
         'jsonc/no-unicode-codepoint-escapes': 'error',
         'jsonc/no-useless-escape': 'error',
         'jsonc/space-unary-ops': 'error',
+        'jsonc/sort-keys': 'error',
         'jsonc/valid-json-number': 'error',
         'jsonc/vue-custom-block/no-parsing-error': 'error',
 
