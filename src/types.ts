@@ -156,6 +156,14 @@ export interface OptionsConfig extends OptionsComponentExts {
   jsonc?: boolean | OptionsOverrides
 
   /**
+   * Enable YML support
+   *
+   * @default
+   * true
+   */
+  yaml?: boolean | OptionsOverrides
+
+  /**
    * Enable Vue support
    *
    * @default
@@ -163,8 +171,20 @@ export interface OptionsConfig extends OptionsComponentExts {
    */
   vue?: boolean | OptionsVue
 
-  react?: boolean
+  /**
+   * Enable Vue support
+   *
+   * @default
+   * false
+   */
+  react?: boolean | OptionsOverrides
 
+  /**
+   * Enable UnoCSS support
+   *
+   * @default
+   * false
+   */
   unocss?: boolean | OptionsUnocss
 
   overrides?: {
@@ -173,6 +193,7 @@ export interface OptionsConfig extends OptionsComponentExts {
     imports?: Config['rules']
     perfectionist?: Config['rules']
     jsonc?: Config['rules']
+    yaml?: Config['rules']
     vue?: Config['rules']
     react?: Config['rules']
     unocss?: Config['rules']

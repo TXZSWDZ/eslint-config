@@ -3,7 +3,7 @@ import type { Awaitable, Config, Configs, OptionsConfig, OptionsOverrides } from
 import { defineConfig } from 'eslint/config'
 import { isPackageExists } from 'local-pkg'
 
-import { base, formatters, ignores, imports, javascript, jsonc, jsx, node, perfectionist, react, stylistic, typescript, unocss, vue } from './config/index'
+import { base, formatters, ignores, imports, javascript, jsonc, jsx, node, perfectionist, react, stylistic, typescript, unocss, vue, yaml } from './config/index'
 import { concat } from './utils/index'
 
 const VuePackages = [
@@ -62,11 +62,25 @@ export async function w(options?: OptionsConfig, ...userConfigs: Configs): Promi
     ignores(options.ignores),
     javascript({ overrides: getOverrides(options, 'javascript') }),
     await node(),
-    await jsonc({
-      stylistic: stylisticOptions,
-      overrides: getOverrides(options, 'jsonc'),
-    }),
   )
+
+  if (options.jsonc) {
+    configs.push(
+      await jsonc({
+        stylistic: stylisticOptions,
+        overrides: getOverrides(options, 'jsonc'),
+      }),
+    )
+  }
+
+  if (options.yaml) {
+    configs.push(
+      await yaml({
+        stylistic: stylisticOptions,
+        overrides: getOverrides(options, 'yaml'),
+      }),
+    )
+  }
 
   if (enableJsx) {
     configs.push(jsx())
